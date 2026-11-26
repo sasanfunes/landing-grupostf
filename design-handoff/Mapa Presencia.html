@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="_ds/grupo-stf-design-system-eeb8eba5-75ff-48bf-96c6-dd026be91b9d/tokens/fonts.css">
+<script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
+<style>
+html,body{margin:0;height:100%;background:#071a2d;color:#fff;font-family:Manrope,sans-serif;overflow:hidden}
+#wrap{position:relative;width:100%;height:100%}
+svg{display:block;width:100%;height:100%}
+.lbl{font:500 10px Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;fill:rgba(255,255,255,.68);pointer-events:none}
+.lbl.hq{fill:#fff;font-weight:700}
+
+.ring{fill:none;stroke:#bf9a5b;stroke-width:1;animation:p 2.4s ease-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes flow{to{stroke-dashoffset:-20}}
+.arc{stroke-dasharray:3 4;animation:flow 1.6s linear infinite}
+.m{cursor:default;opacity:0;transition:opacity 500ms ease}
+@keyframes p{0%{transform:scale(.6);opacity:.9}100%{transform:scale(3.2);opacity:0}}
+#tip{position:absolute;pointer-events:none;background:#0c2743;border:1px solid rgba(191,154,91,.5);padding:14px 16px;min-width:180px;opacity:0;transition:opacity 180ms ease;transform:translate(-50%,calc(-100% - 18px))}
+#tip .c{font:400 22px 'DM Serif Display',serif;line-height:1}
+#tip .k{margin-top:6px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#bf9a5b}
+#tip .u{margin-top:10px;font-size:12px;line-height:1.5;color:rgba(255,255,255,.68)}
+#leg{position:absolute;left:24px;bottom:20px;display:flex;gap:22px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+#leg span{display:flex;align-items:center;gap:8px}
+@media (prefers-reduced-motion:reduce){.ring{animation:none;opacity:0}}
+</style></head>
+<body><div id="wrap"><svg id="map" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet"></svg><div id="tip"></div>
+<div id="leg"><span><i style="width:8px;height:8px;border-radius:50%;background:#bf9a5b;display:block"></i><b id="l1" style="font-weight:500"></b></span><span><i style="width:14px;height:8px;background:rgba(191,154,91,.32);display:block"></i><b id="l2" style="font-weight:500"></b></span></div></div>
+<script>
+const en=new URLSearchParams(location.search).get('lang')==='en';
+document.getElementById('l1').parentNode.style.display='none';
+document.getElementById('l2').textContent=en?'Countries with operations':'Países con operación';
+const present=new Set(['Mexico','Honduras','Spain']);
+const O=[
+{c:'Honduras',ce:'Honduras',hq:1,lon:-86.6,lat:14.8,u:'Inmobiliario · Construcción · Comercial · Logística · Servicios',ue:'Real Estate · Construction · Retail · Logistics · Services',dx:12,dy:16,a:'start'},
+{c:'México',ce:'Mexico',lon:-101.5,lat:22.5,u:'Inmobiliario · Construcción · Logística · Servicios',ue:'Real Estate · Construction · Logistics · Services',dx:-12,dy:4,a:'end'},
+{c:'España',ce:'Spain',lon:-3.7,lat:40.2,u:'Comercial · Inmobiliario',ue:'Retail · Real Estate',dx:12,dy:4,a:'start'}];
+const W=1000,H=560,svg=d3.select('#map');
+const proj=d3.geoNaturalEarth1().fitExtent([[30,20],[W-30,H-40]],{type:'MultiPoint',coordinates:[[-112,46],[8,46],[-112,8],[8,8]]});
+const path=d3.geoPath(proj);
+fetch('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json').then(r=>r.json()).then(t=>{
+  const countries=topojson.feature(t,t.objects.countries).features;
+  svg.append('path').attr('d',path(d3.geoGraticule10())).attr('fill','none').attr('stroke','rgba(255,255,255,.05)');
+  svg.append('g').selectAll('path').data(countries).join('path').attr('d',path)
+    .attr('fill',d=>present.has(d.properties.name)?'rgba(191,154,91,.32)':'rgba(255,255,255,.06)')
+    .attr('stroke',d=>present.has(d.properties.name)?'rgba(191,154,91,.7)':'rgba(255,255,255,.14)').attr('stroke-width',.6);
+  const hq=proj([O[0].lon,O[0].lat]);
+  const lines=svg.append('g');
+  O.slice(1).forEach(o=>{const p=proj([o.lon,o.lat]);const mx=(hq[0]+p[0])/2,my=Math.min(hq[1],p[1])-Math.hypot(p[0]-hq[0],p[1]-hq[1])*.25;
+    const pa=lines.append('path').attr('d',`M${hq[0]},${hq[1]} Q${mx},${my} ${p[0]},${p[1]}`).attr('fill','none').attr('stroke','rgba(191,154,91,.6)').attr('stroke-width',1);const L=pa.node().getTotalLength();pa.attr('stroke-dasharray',L+' '+L).attr('stroke-dashoffset',L).transition().delay(600+O.indexOf(o)*250).duration(1200).ease(d3.easeCubicInOut).attr('stroke-dashoffset',0).on('end',function(){d3.select(this).attr('class','arc').attr('stroke-dasharray',null).attr('stroke-dashoffset',null);});});
+  const tip=document.getElementById('tip'),wrap=document.getElementById('wrap');
+  const g=svg.append('g').selectAll('g').data(O).join('g').attr('class','m').attr('transform',d=>`translate(${proj([d.lon,d.lat])})`);
+  g.transition().delay((d,i)=>i?800+i*250:200).duration(1).style('opacity',1);
+  g.append('circle').attr('class','ring').attr('r',d=>d.hq?7:5);
+  g.append('circle').attr('r',d=>d.hq?5:3.5).attr('fill','#bf9a5b').attr('stroke','#071a2d').attr('stroke-width',1.5);
+  g.append('circle').attr('r',14).attr('fill','transparent');
+  g.append('text').attr('class',d=>'lbl'+(d.hq?' hq':'')).attr('x',d=>d.dx).attr('y',d=>d.dy).attr('text-anchor',d=>d.a).text(d=>en?d.ce:d.c);
+
+});
+</script></body></html>

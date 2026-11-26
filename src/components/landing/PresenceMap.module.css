@@ -1,0 +1,151 @@
+.frame {
+  position: relative;
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+  border: 1px solid var(--on-dark-line);
+  background: var(--navy-dark);
+}
+
+.canvas {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1000 / 560;
+}
+
+.svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.graticule {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.05);
+  vector-effect: non-scaling-stroke;
+}
+
+.land,
+.present {
+  stroke-width: 0.6;
+  vector-effect: non-scaling-stroke;
+}
+.land {
+  fill: rgba(255, 255, 255, 0.06);
+  stroke: rgba(255, 255, 255, 0.14);
+}
+.present {
+  fill: rgba(191, 154, 91, 0.32);
+  stroke: rgba(191, 154, 91, 0.7);
+}
+
+/* Arcos: se dibujan y luego fluyen. */
+.arcDraw,
+.arcFlow {
+  fill: none;
+  stroke: rgba(191, 154, 91, 0.6);
+}
+.arcDraw {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 0;
+  animation: draw 1200ms cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+.arcFlow {
+  stroke-dasharray: calc(3px * var(--k, 1)) calc(4px * var(--k, 1));
+  animation: flow 1.6s linear infinite;
+}
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes flow {
+  to {
+    stroke-dashoffset: calc(-21px * var(--k, 1));
+  }
+}
+
+/* Puntos */
+.marker {
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+.svg[data-ready] .marker {
+  opacity: 1;
+}
+.dot {
+  fill: var(--gold);
+  stroke: var(--navy-dark);
+}
+.ring {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pulse 2.4s ease-out infinite;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+
+.label {
+  font-family: var(--sans);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  fill: rgba(255, 255, 255, 0.68);
+  pointer-events: none;
+}
+.hq {
+  fill: var(--white);
+  font-weight: 700;
+}
+
+/* Leyenda */
+.legend {
+  position: absolute;
+  left: 24px;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--on-dark-body);
+}
+.legendSwatch {
+  display: block;
+  width: 14px;
+  height: 8px;
+  background: rgba(191, 154, 91, 0.32);
+  border: 1px solid rgba(191, 154, 91, 0.7);
+}
+
+@media (max-width: 599px) {
+  .legend {
+    position: static;
+    padding: 12px 16px;
+    border-top: 1px solid var(--on-dark-line);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ring {
+    opacity: 0;
+  }
+}

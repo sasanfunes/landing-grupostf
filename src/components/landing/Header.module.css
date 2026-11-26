@@ -1,0 +1,225 @@
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 3px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 90;
+  height: var(--header-h);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 0 4vw;
+  padding-left: max(4vw, env(safe-area-inset-left));
+  padding-right: max(4vw, env(safe-area-inset-right));
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition:
+    background 300ms ease,
+    border-color 300ms ease;
+}
+.header[data-solid] {
+  background: var(--topbar-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.header[data-scrolled] {
+  border-bottom-color: var(--on-dark-line);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+.logoImg {
+  height: 38px;
+  width: auto;
+}
+
+.nav {
+  display: flex;
+  gap: 36px;
+  align-items: center;
+}
+.navLink {
+  position: relative;
+  padding: 6px 0;
+  color: var(--white);
+  opacity: 0.78;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: opacity var(--dur-fast) ease;
+}
+.navLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transition: transform var(--dur-fast) ease;
+}
+.navLink:hover,
+.navLink[aria-current] {
+  opacity: 1;
+  color: var(--white);
+}
+.navLink[aria-current]::after {
+  transform: scaleX(1);
+}
+
+.right {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.langs {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.langItem {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.langSep {
+  width: 1px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.35);
+}
+.langBtn {
+  min-width: 24px;
+  min-height: 30px;
+  padding: 4px 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: var(--white);
+  opacity: 0.45;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  transition: opacity var(--dur-fast) ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.langBtn[aria-pressed="true"] {
+  opacity: 1;
+}
+@media (hover: hover) {
+  .langBtn:hover {
+    opacity: 1;
+  }
+}
+
+.burger {
+  display: none;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin-right: -6px;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.burger span {
+  position: absolute;
+  left: 11px;
+  width: 17px;
+  height: 1px;
+  background: var(--white);
+  transition:
+    top var(--dur-fast) ease,
+    transform var(--dur-fast) ease;
+}
+.burger span:first-child {
+  top: 16px;
+}
+.burger span:last-child {
+  top: 23px;
+}
+.burger[data-open] span:first-child {
+  top: 20px;
+  transform: rotate(45deg);
+}
+.burger[data-open] span:last-child {
+  top: 20px;
+  transform: rotate(-45deg);
+}
+
+.mobile {
+  position: fixed;
+  top: var(--header-h);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 89;
+  display: flex;
+  flex-direction: column;
+  padding: 16px var(--section-x) max(40px, env(safe-area-inset-bottom));
+  background: var(--navy-dark);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  animation: menuIn 220ms ease both;
+}
+@keyframes menuIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.mobileLink {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--on-dark-line);
+  color: var(--white);
+  font-family: var(--serif);
+  font-size: clamp(26px, 8vw, 32px);
+  line-height: 1.1;
+}
+.mobileArrow {
+  color: var(--gold);
+  font-family: var(--sans);
+  font-size: 20px;
+}
+
+@media (max-width: 899px) {
+  .nav,
+  .cta {
+    display: none;
+  }
+  .burger {
+    display: block;
+  }
+  .right {
+    gap: 14px;
+  }
+  .logoImg {
+    height: 34px;
+  }
+}

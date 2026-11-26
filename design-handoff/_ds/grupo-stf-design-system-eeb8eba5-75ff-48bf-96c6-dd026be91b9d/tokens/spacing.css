@@ -1,0 +1,20 @@
+:root{
+  --space-section-y:130px;
+  --space-section-x:7vw;
+  --space-gutter:4vw;
+  --space-mobile:24px;
+  --topbar-height:76px;
+  --topbar-height-mobile:66px;
+  --space-1:8px;
+  --space-2:14px;
+  --space-3:18px;
+  --space-4:24px;
+  --space-5:28px;
+  --space-6:36px;
+  --space-7:48px;
+  --space-8:70px;
+  --radius-none:0;
+  --radius-round:50%;
+  --radius-phone:38px;
+  --border-hair:1px solid var(--line);
+}

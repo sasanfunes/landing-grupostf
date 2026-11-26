@@ -1,0 +1,39 @@
+:root{
+  /* Base palette (from brand manual src/styles.css) */
+  --navy:#0c2743;
+  --navy-dark:#071a2d;
+  --gold:#bf9a5b;
+  --cream:#f2efe8;
+  --warm-white:#f7f5f0;
+  --white:#ffffff;
+  --ink:#102337;
+  --muted:#6d7780;
+  --line:rgba(12,39,67,0.16);
+  --error:#a43f37;
+  --success:#2f6b4f;
+  --phone-bezel:#020b13;
+  --stone:#d9d5cb;
+  --stone-dark:#d5d1c9;
+
+  /* On-dark alphas */
+  --on-dark-strong:rgba(255,255,255,0.68);
+  --on-dark-body:rgba(255,255,255,0.6);
+  --on-dark-muted:rgba(255,255,255,0.45);
+  --on-dark-line:rgba(255,255,255,0.12);
+  --on-dark-border:rgba(255,255,255,0.35);
+  --gold-line:rgba(191,154,91,0.18);
+
+  /* Semantic aliases */
+  --surface-page:var(--warm-white);
+  --surface-alt:var(--cream);
+  --surface-card:var(--white);
+  --surface-inverse:var(--navy);
+  --surface-inverse-deep:var(--navy-dark);
+  --text-body:var(--ink);
+  --text-heading:var(--navy);
+  --text-muted:var(--muted);
+  --text-accent:var(--gold);
+  --text-on-inverse:var(--white);
+  --border-default:var(--line);
+  --accent:var(--gold);
+}

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/grupo-stf-design-system-eeb8eba5-75ff-48bf-96c6-dd026be91b9d/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/grupo-stf-design-system-eeb8eba5-75ff-48bf-96c6-dd026be91b9d/tokens/colors.css">
+<link rel="stylesheet" href="_ds/grupo-stf-design-system-eeb8eba5-75ff-48bf-96c6-dd026be91b9d/tokens/typography.css">
+<link rel="stylesheet" href="_ds/grupo-stf-design-system-eeb8eba5-75ff-48bf-96c6-dd026be91b9d/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/grupo-stf-design-system-eeb8eba5-75ff-48bf-96c6-dd026be91b9d/tokens/effects.css">
+<link rel="stylesheet" href="_ds/grupo-stf-design-system-eeb8eba5-75ff-48bf-96c6-dd026be91b9d/tokens/base.css">
+<link rel="stylesheet" href="_ds/grupo-stf-design-system-eeb8eba5-75ff-48bf-96c6-dd026be91b9d/styles.css">
+<script src="_ds/grupo-stf-design-system-eeb8eba5-75ff-48bf-96c6-dd026be91b9d/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;background:#fff;color:#102337;font-family:var(--sans)}
+a{color:#0c2743;text-decoration:none}a:hover{color:#bf9a5b}
+button{font-family:var(--sans)}
+@keyframes stfMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes stfKen{from{transform:scale(1.12)}to{transform:scale(1)}}
+@keyframes stfBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</helmet>
+
+<div style="position:relative;overflow-x:clip">
+<div ref="{{ progressRef }}" style="position:fixed;top:0;left:0;z-index:100;height:3px;width:0;background:var(--gold)"></div>
+
+<header style="position:fixed;top:0;left:0;right:0;z-index:90;height:76px;box-sizing:border-box;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:0 4vw;background:{{ headerBg }};border-bottom:1px solid {{ headerLine }};backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:background 300ms ease, border-color 300ms ease">
+  <a href="#inicio" onClick="{{ jumpTop }}" style="display:flex;align-items:center"><img src="assets/grupo-stf-white.png" alt="Grupo STF" style="height:38px;width:auto;display:block"></a>
+  <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+    <nav style="display:flex;gap:36px;align-items:center">
+      <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+        <a href="#{{ n.id }}" onClick="{{ n.go }}" style="position:relative;padding:6px 0;color:#fff;opacity:{{ n.op }};font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;transition:opacity 180ms ease" style-hover="opacity:1;color:#fff">{{ n.label }}<span style="position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold);transform:scaleX({{ n.scale }});transition:transform 180ms ease"></span></a>
+      </sc-for>
+    </nav>
+  </sc-if>
+  <div style="display:flex;gap:24px;align-items:center">
+    <div style="display:flex;gap:8px;align-items:center">
+      <button type="button" onClick="{{ setEs }}" style="background:none;border:0;padding:4px 0;cursor:pointer;color:#fff;opacity:{{ esOp }};font-weight:700;font-size:11px;letter-spacing:0.12em">ES</button>
+      <span style="width:1px;height:12px;background:rgba(255,255,255,0.35)"></span>
+      <button type="button" onClick="{{ setEn }}" style="background:none;border:0;padding:4px 0;cursor:pointer;color:#fff;opacity:{{ enOp }};font-weight:700;font-size:11px;letter-spacing:0.12em">EN</button>
+    </div>
+    <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+      <x-import component-from-global-scope="GrupoSTFDesignSystem_eeb8eb.CircleButton" label="{{ t.nav.contacto }}" icon="→" on-click="{{ goContact }}" hint-size="130px,30px"></x-import>
+    </sc-if>
+    <sc-if value="{{ narrow }}">
+      <button type="button" onClick="{{ toggleMobile }}" aria-label="Menú" style="position:relative;width:30px;height:30px;background:none;border:0;cursor:pointer">
+        <span style="position:absolute;left:6px;width:17px;height:1px;background:#fff;top:{{ burgerTop }};transform:rotate({{ burgerRotA }});transition:all 180ms ease"></span>
+        <span style="position:absolute;left:6px;width:17px;height:1px;background:#fff;top:{{ burgerBot }};transform:rotate({{ burgerRotB }});transition:all 180ms ease"></span>
+      </button>
+    </sc-if>
+  </div>
+</header>
+<sc-if value="{{ mobileOpen }}">
+  <div style="position:fixed;top:76px;left:0;right:0;bottom:0;z-index:89;background:#071a2d;padding:16px 24px 40px;display:flex;flex-direction:column">
+    <sc-for list="{{ navItems }}" as="n">
+      <a href="#{{ n.id }}" onClick="{{ n.go }}" style="display:flex;justify-content:space-between;padding:22px 0;border-bottom:1px solid rgba(255,255,255,0.12);color:#fff;font-family:var(--serif);font-size:32px"><span>{{ n.label }}</span><span style="color:var(--gold);font-family:var(--sans);font-size:20px">→</span></a>
+    </sc-for>
+  </div>
+</sc-if>
+
+<!-- HERO -->
+<section id="inicio" data-screen-label="01 Hero" style="position:relative;height:max(680px,100vh);box-sizing:border-box;background:#0c2743;color:#fff;overflow:hidden">
+  <div ref="{{ heroImgRef }}" style="position:absolute;inset:-6% 0 0 0;will-change:transform">{{ heroImg }}</div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(90deg, rgba(7,26,45,0.9) 0%, rgba(7,26,45,0.55) 50%, rgba(7,26,45,0.1) 90%), linear-gradient(0deg, rgba(7,26,45,0.6) 0%, transparent 35%)"></div>
+  <div style="position:absolute;left:7vw;right:7vw;bottom:12vh;max-width:860px">
+    <div data-hero="0"><x-import component-from-global-scope="GrupoSTFDesignSystem_eeb8eb.Eyebrow" tone="gold" rule="{{ true }}" hint-size="200px,20px">Grupo STF</x-import></div>
+    <h1 data-hero="1" style="margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(3.2rem,6.4vw,7rem);letter-spacing:-0.04em;line-height:0.95;text-wrap:balance">{{ t.heroT }} <em style="color:var(--gold)">{{ t.heroEmph }}</em></h1>
+    <p data-hero="2" style="margin:30px 0 0;max-width:500px;font-size:17px;line-height:1.65;color:rgba(255,255,255,0.78);text-wrap:pretty">{{ t.heroLead }}</p>
+    <div data-hero="3" style="display:flex;flex-wrap:wrap;gap:14px;margin-top:36px">
+      <x-import component-from-global-scope="GrupoSTFDesignSystem_eeb8eb.Button" variant="gold" size="lg" icon="→" on-click="{{ goUnits }}" hint-size="230px,58px">{{ t.heroCta }}</x-import>
+    </div>
+  </div>
+  <div data-hero="4" style="position:absolute;right:7vw;bottom:12vh;display:flex;gap:10px;align-items:center;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.6)">{{ t.scroll }} {{ scrollArrow }}</div>
+</section>
+
+<div aria-hidden="true" style="background:#fff;overflow:hidden;padding:22px 0;border-bottom:1px solid var(--line)">{{ marquee }}</div>
+
+<!-- NOSOTROS + CIFRAS -->
+<section id="nosotros" ref="{{ statsRef }}" data-screen-label="02 Nosotros" style="position:relative;background:#f7f5f0;padding:130px 7vw">
+  <x-import component-from-global-scope="GrupoSTFDesignSystem_eeb8eb.SectionNumber" style="{{ railStyle }}" hint-size="20px,90px">01</x-import>
+  <div data-reveal="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:6vw;align-items:end">
+    <x-import component-from-global-scope="GrupoSTFDesignSystem_eeb8eb.SectionHeading" eyebrow="{{ t.aboutEyebrow }}" title="{{ t.aboutT }}" emphasis="{{ t.aboutEmph }}" size="h3" hint-size="100%,220px"></x-import>
+    <p style="margin:0;max-width:540px;font-size:18px;line-height:1.7;color:#102337;text-wrap:pretty">{{ t.aboutP }}</p>
+  </div>
+  <div data-stagger="1" style="margin-top:90px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px 4vw">
+    <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+      <x-import component-from-global-scope="GrupoSTFDesignSystem_eeb8eb.Stat" value="{{ s.val }}" suffix="{{ s.suf }}" label="{{ s.label }}" hint-size="100%,120px"></x-import>
+    </sc-for>
+  </div>
+</section>
+
+<!-- NEGOCIOS -->
+<section id="negocios" data-screen-label="03 Negocios" style="position:relative;background:#fff;padding:130px 7vw">
+  <x-import component-from-global-scope="GrupoSTFDesignSystem_eeb8eb.SectionNumber" style="{{ railStyle }}" hint-size="20px,90px">02</x-import>
+  <div data-reveal="1" style="margin-bottom:64px">
+    <x-import component-from-global-scope="GrupoSTFDesignSystem_eeb8eb.SectionHeading" eyebrow="{{ t.unitsEyebrow }}" title="{{ t.unitsT }}" emphasis="{{ t.unitsEmph }}" size="h3" hint-size="100%,200px"></x-import>
+  </div>
+  <div data-stagger="1" style="display:grid;grid-template-columns:{{ unitCols }};gap:48px 3vw">
+    <sc-for list="{{ units }}" as="u" hint-placeholder-count="5">
+      <div onMouseEnter="{{ u.enter }}" onMouseLeave="{{ unitLeave }}" style="position:relative;display:flex;flex-direction:column;gap:16px;padding:30px 0 0;border-top:1px solid var(--line);cursor:default">
+        <span style="position:absolute;left:0;top:-1px;height:2px;width:{{ u.line }};background:var(--gold);transition:width 450ms ease"></span>
+        <span style="font-family:var(--serif);font-size:14px;color:var(--gold)">{{ u.n }}</span>
+        <span style="font-family:var(--serif);font-size:clamp(24px,2.1vw,30px);line-height:1;overflow-wrap:anywhere;color:{{ u.fg }};transition:color 350ms ease, transform 350ms ease;transform:translateY({{ u.shift }})">{{ u.name }}</span>
+        <span style="flex:1;font-size:14px;line-height:1.6;color:{{ u.sub }};text-wrap:pretty;transition:color 350ms ease">{{ u.short }}</span>
+        <span style="display:grid;place-items:center;width:30px;height:30px;border-radius:50%;border:1px solid {{ u.circ }};color:{{ u.fg }};transform:rotate({{ u.rot }});transition:all 350ms ease">→</span>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<!-- PRESENCIA -->
+<section id="presencia" data-screen-label="04 Presencia" style="position:relative;background:#071a2d;color:#fff;padding:130px 7vw">
+  <x-import component-from-global-scope="GrupoSTFDesignSystem_eeb8eb.SectionNumber" style="{{ railStyle }}" hint-size="20px,90px">03</x-import>
+  <div data-reveal="1" style="display:grid;grid-template-columns:{{ presCols }};gap:5vw;align-items:center">
+    <div style="display:flex;flex-direction:column;gap:40px">
+      <x-import component-from-global-scope="GrupoSTFDesignSystem_eeb8eb.SectionHeading" eyebrow="{{ t.mapEyebrow }}" title="{{ t.mapT }}" emphasis="{{ t.mapEmph }}" on-dark="{{ true }}" size="h3" hint-size="100%,200px"></x-import>
+      <div style="border-top:1px solid rgba(255,255,255,0.12)">
+        <sc-for list="{{ t.countries }}" as="c" hint-placeholder-count="3">
+          <div style="display:grid;grid-template-columns:40px minmax(0,1fr);gap:16px;align-items:baseline;padding:22px 0;border-bottom:1px solid rgba(255,255,255,0.12);transition:padding 250ms ease, background 250ms ease" style-hover="padding-left:14px;background:rgba(255,255,255,0.04)">
+            <span style="font-family:var(--serif);font-size:15px;color:var(--gold)">0{{ c.i }}</span>
+            <span style="font-family:var(--serif);font-size:30px;line-height:1">{{ c.name }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div ref="{{ mapRef }}" style="min-width:0;position:relative;aspect-ratio:1000/560;width:100%;border:1px solid rgba(255,255,255,0.12);background:#071a2d">
+      <sc-if value="{{ mapOn }}"><iframe src="Mapa Presencia.html?lang={{ lang }}" title="Mapa de presencia" style="position:absolute;inset:0;width:100%;height:100%;border:0;display:block"></iframe></sc-if>
+    </div>
+  </div>
+</section>
+
+<!-- CARRERAS -->
+<section id="carreras" data-screen-label="05 Carreras" style="position:relative;background:#fff;padding:130px 7vw">
+  <x-import component-from-global-scope="GrupoSTFDesignSystem_eeb8eb.SectionNumber" style="{{ railStyle }}" hint-size="20px,90px">04</x-import>
+  <div data-reveal="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:4vw 6vw;align-items:end;margin-bottom:56px">
+    <x-import component-from-global-scope="GrupoSTFDesignSystem_eeb8eb.SectionHeading" eyebrow="{{ t.jobsEyebrow }}" title="{{ t.jobsT }}" emphasis="{{ t.jobsEmph }}" size="h3" hint-size="100%,200px"></x-import>
+    <p style="margin:0;max-width:480px;font-size:16px;line-height:1.7;color:#6d7780;text-wrap:pretty">{{ t.jobsLead }}</p>
+  </div>
+  <div data-reveal="1" style="display:flex;flex-wrap:wrap;gap:8px 26px;margin-bottom:28px">
+    <sc-for list="{{ jobChips }}" as="c" hint-placeholder-count="6">
+      <button type="button" onClick="{{ c.go }}" style="position:relative;padding:8px 0;background:none;border:0;cursor:pointer;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:{{ c.fg }};transition:color 180ms ease">{{ c.label }}<span style="position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold);transform:scaleX({{ c.scale }});transition:transform 180ms ease"></span></button>
+    </sc-for>
+  </div>
+  <div style="border-top:1px solid var(--line)">
+    <sc-for list="{{ jobs }}" as="j" hint-placeholder-count="5">
+      <div style="border-bottom:1px solid var(--line)">
+        <button type="button" onClick="{{ j.toggle }}" style="width:100%;display:grid;grid-template-columns:{{ jobCols }};gap:10px 28px;align-items:center;padding:28px 0;background:none;border:0;cursor:pointer;text-align:left;color:#0c2743">
+          <span style="font-family:var(--serif);font-size:clamp(22px,2vw,28px);line-height:1.1">{{ j.title }}</span>
+          <span style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold)">{{ j.unit }}</span>
+          <span style="font-size:13px;color:#6d7780">{{ j.country }} · {{ j.type }}</span>
+          <span style="justify-self:end;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;border:1px solid {{ j.circ }};background:{{ j.circBg }};transform:rotate({{ j.rot }});transition:all 250ms ease">+</span>
+        </button>
+        <sc-if value="{{ j.open }}">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:28px 6vw;padding:0 0 36px">
+            <p style="margin:0;font-size:15px;line-height:1.7;color:#102337;text-wrap:pretty">{{ j.desc }}</p>
+            <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start">
+              <span style="font-size:13px;line-height:1.6;color:#6d7780">{{ j.req }}</span>
+              <sc-if value="{{ j.notApplied }}"><x-import component-from-global-scope="GrupoSTFDesignSystem_eeb8eb.Button" variant="primary" icon="→" on-click="{{ j.apply }}" hint-size="180px,48px">{{ t.apply }}</x-import></sc-if>
+              <sc-if value="{{ j.applied }}"><span style="display:flex;gap:12px;align-items:center;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#0c2743"><span style="display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--gold);color:#071a2d">✓</span>{{ t.applied }}</span></sc-if>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto" data-screen-label="06 Contacto" style="position:relative;background:#f7f5f0;padding:130px 7vw">
+  <x-import component-from-global-scope="GrupoSTFDesignSystem_eeb8eb.SectionNumber" style="{{ railStyle }}" hint-size="20px,90px">05</x-import>
+  <div data-reveal="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:6vw;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:36px">
+      <x-import component-from-global-scope="GrupoSTFDesignSystem_eeb8eb.SectionHeading" eyebrow="{{ t.contactEyebrow }}" title="{{ t.contactT }}" emphasis="{{ t.contactEmph }}" size="h3" hint-size="100%,200px"></x-import>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:15px;line-height:1.6;color:#102337">
+        <span>Paseo de la Reforma 2620, Lomas Altas, 11950, Ciudad de México</span>
+        <span>+52 55 5000 7800 · contacto@grupostf.mx</span>
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--line);padding:44px clamp(24px,4vw,52px)">
+      <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ submit }}" style="display:flex;flex-direction:column;gap:22px">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px">
+            <x-import component-from-global-scope="GrupoSTFDesignSystem_eeb8eb.Input" label="{{ t.fName }}" required="{{ true }}" hint-size="100%,76px"></x-import>
+            <x-import component-from-global-scope="GrupoSTFDesignSystem_eeb8eb.Input" label="{{ t.fEmail }}" type="email" required="{{ true }}" hint-size="100%,76px"></x-import>
+          </div>
+          <x-import component-from-global-scope="GrupoSTFDesignSystem_eeb8eb.Textarea" id="f-msg" label="{{ t.fMsg }}" rows="{{ 4 }}" hint-size="100%,150px"></x-import>
+          <div><x-import component-from-global-scope="GrupoSTFDesignSystem_eeb8eb.Button" type="submit" variant="primary" size="lg" icon="→" hint-size="200px,58px">{{ t.fSend }}</x-import></div>
+        </form>
+      </sc-if>
+      <sc-if value="{{ sent }}">
+        <div style="display:flex;flex-direction:column;gap:20px;padding:20px 0">
+          <p style="margin:0;font-family:var(--serif);font-size:40px;line-height:1;color:#0c2743">{{ t.sentT }} <em style="color:var(--gold)">{{ t.sentEmph }}</em></p>
+          <p style="margin:0;font-size:15px;line-height:1.7;color:#6d7780">{{ t.sentP }}</p>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</section>
+
+<footer data-screen-label="06 Footer" style="background:#071a2d;color:#fff;padding:44px 7vw;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px">
+  <img src="assets/grupo-stf-white.png" alt="Grupo STF" style="height:36px;width:auto">
+  <span style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.6)">© 2026 Grupo STF · {{ t.privacy }}</span>
+  <x-import component-from-global-scope="GrupoSTFDesignSystem_eeb8eb.CircleButton" label="{{ t.top }}" icon="↑" on-click="{{ jumpTop }}" hint-size="120px,30px"></x-import>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;startLang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;es&quot;,&quot;en&quot;],&quot;default&quot;:&quot;es&quot;,&quot;tsType&quot;:&quot;'es' | 'en'&quot;,&quot;section&quot;:&quot;Idioma&quot;},&quot;revealAnimations&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Movimiento&quot;}}">
+const COPY = {
+ es:{ nav:{nosotros:'Nosotros',negocios:'Negocios',presencia:'Presencia',carreras:'Carrera',contacto:'Contacto'},
+  jobsEyebrow:'Carrera', jobsT:'Crece con un grupo\nque piensa a', jobsEmph:'largo plazo.', jobsLead:'Buscamos personas que quieran construir con nosotros. Explora las vacantes abiertas en nuestras unidades de negocio y postúlate.', all:'Todas', apply:'Postularme', applied:'Postulación enviada', fullTime:'Tiempo completo', hybrid:'Híbrido',
+  heroT:'Construimos valor para el', heroEmph:'largo plazo.', heroLead:'Integramos capacidades, experiencia y visión en cinco sectores estratégicos para crear oportunidades con impacto sostenible.', heroCta:'Nuestros negocios', scroll:'Desplazar',
+  aboutEyebrow:'Quiénes somos', aboutT:'Soluciones que\ntrascienden', aboutEmph:'fronteras.',
+  aboutP:'Grupo STF es una organización hondureña con presencia internacional, dedicada a desarrollar soluciones de alto impacto que generan valor duradero en cada mercado donde opera.',
+  stats:['Años de trayectoria','Países con operación','Colaboradores','Unidades de negocio'],
+  unitsEyebrow:'Unidades de negocio', unitsT:'Cinco sectores,\nuna sola', unitsEmph:'visión.',
+  units:[['Inmobiliario','Desarrollo y administración de activos residenciales, corporativos y de usos mixtos.'],['Construcción','Edificación, obra civil e infraestructura con estándares internacionales.'],['Comercial','Centros y plazas comerciales que conectan marcas con comunidades.'],['Logística','Parques industriales y redes de distribución para la región.'],['Servicios','Servicios corporativos y administración de instalaciones.']],
+  mapEyebrow:'Presencia', mapT:'Tres países,\nuna misma', mapEmph:'visión.',
+  countries:[{i:1,name:'México',cities:'Ciudad de México (Sede) · Monterrey · Guadalajara'},{i:2,name:'Honduras',cities:'San Pedro Sula · Tegucigalpa'},{i:3,name:'España',cities:'Madrid'}],
+  contactEyebrow:'Contacto', contactT:'Hablemos de lo', contactEmph:'que sigue.',
+  fName:'Nombre completo', fEmail:'Correo electrónico', fMsg:'Mensaje', fSend:'Enviar mensaje',
+  sentT:'Gracias por', sentEmph:'escribirnos.', sentP:'Un miembro de nuestro equipo te contactará en breve.',
+  privacy:'Aviso de privacidad', top:'Volver arriba' },
+ en:{ nav:{nosotros:'About',negocios:'Businesses',presencia:'Presence',carreras:'Careers',contacto:'Contact'},
+  jobsEyebrow:'Careers', jobsT:'Grow with a group\nthat thinks', jobsEmph:'long term.', jobsLead:'We look for people who want to build with us. Explore open positions across our business units and apply.', all:'All', apply:'Apply now', applied:'Application sent', fullTime:'Full time', hybrid:'Hybrid',
+  heroT:'We build value for the', heroEmph:'long term.', heroLead:'We bring together capabilities, experience and vision across five strategic sectors to create opportunities with sustainable impact.', heroCta:'Our businesses', scroll:'Scroll',
+  aboutEyebrow:'Who we are', aboutT:'Solutions that\nreach beyond', aboutEmph:'borders.',
+  aboutP:'Grupo STF is a Honduran organization with an international presence, dedicated to delivering high-impact solutions that create lasting value in every market where it operates.',
+  stats:['Years of history','Countries of operation','Employees','Business units'],
+  unitsEyebrow:'Business units', unitsT:'Five sectors,\none single', unitsEmph:'vision.',
+  units:[['Real Estate','Development and management of residential, corporate and mixed-use assets.'],['Construction','Building, civil works and infrastructure to international standards.'],['Retail','Shopping centers that connect brands with communities.'],['Logistics','Industrial parks and distribution networks for the region.'],['Services','Corporate services and facility management.']],
+  mapEyebrow:'Presence', mapT:'Three countries,\none', mapEmph:'vision.',
+  countries:[{i:1,name:'Mexico',cities:'Mexico City (HQ) · Monterrey · Guadalajara'},{i:2,name:'Honduras',cities:'San Pedro Sula · Tegucigalpa'},{i:3,name:'Spain',cities:'Madrid'}],
+  contactEyebrow:'Contact', contactT:'Let’s talk about', contactEmph:'what’s next.',
+  fName:'Full name', fEmail:'Email', fMsg:'Message', fSend:'Send message',
+  sentT:'Thank you for', sentEmph:'reaching out.', sentP:'A member of our team will contact you shortly.',
+  privacy:'Privacy notice', top:'Back to top' }
+};
+const JOBS = [
+ { u:0, c:0, ft:1, es:['Gerente de Desarrollo Inmobiliario','Lidera proyectos desde la factibilidad hasta la entrega, coordinando equipos de diseño, construcción y comercialización.','8+ años en desarrollo inmobiliario · Finanzas de proyecto · Liderazgo de equipos'], en:['Real Estate Development Manager','Lead projects from feasibility to delivery, coordinating design, construction and leasing teams.','8+ years in real estate development · Project finance · Team leadership'] },
+ { u:1, c:0, ft:1, es:['Superintendente de Obra','Supervisa la ejecución en sitio garantizando calidad, seguridad, tiempo y costo.','Ingeniería civil · 5+ años en obra · Normas de seguridad'], en:['Construction Superintendent','Oversee on-site execution ensuring quality, safety, schedule and cost.','Civil engineering · 5+ years on site · Safety standards'] },
+ { u:3, c:1, ft:1, es:['Coordinador de Operaciones Logísticas','Optimiza la operación de centros de distribución y la relación con clientes industriales.','Logística o ingeniería industrial · 3+ años · Manejo de WMS'], en:['Logistics Operations Coordinator','Optimize distribution center operations and relationships with industrial clients.','Logistics or industrial engineering · 3+ years · WMS experience'] },
+ { u:2, c:0, ft:1, es:['Líder de Comercialización','Diseña la mezcla comercial y cierra acuerdos con marcas para nuestros centros.','Leasing comercial · Negociación · 4+ años'], en:['Leasing Lead','Shape the tenant mix and close agreements with brands for our centers.','Retail leasing · Negotiation · 4+ years'] },
+ { u:4, c:1, ft:1, es:['Ingeniero de Facility Management','Gestiona el mantenimiento y la operación de instalaciones corporativas.','Ingeniería electromecánica · 3+ años · Gestión de proveedores'], en:['Facility Management Engineer','Manage maintenance and operation of corporate facilities.','Electromechanical engineering · 3+ years · Vendor management'] },
+ { u:0, c:2, ft:0, es:['Analista de Inversiones','Evalúa oportunidades de inversión y prepara modelos financieros para el comité.','Finanzas · Modelado financiero · Inglés avanzado'], en:['Investment Analyst','Evaluate investment opportunities and build financial models for the committee.','Finance · Financial modeling · Fluent English'] },
+];
+const STATS = [{n:28,s:''},{n:3,s:''},{n:14500,s:'+'},{n:5,s:''}];
+const SECTIONS = ['nosotros','negocios','presencia','carreras','contacto'];
+
+class Component extends DCLogic {
+  state = { jobCat:-1, openJob:-1, appliedJobs:{}, lang:this.props.startLang || 'es', active:'', mobile:false, countP:0, sent:false, wide:true, scrolled:false, hoverUnit:-1, mapOn:false };
+  progressRef = React.createRef();
+  heroImgRef = React.createRef();
+  mapRef = React.createRef();
+  statsRef = React.createRef();
+  componentDidMount() {
+    this.onScroll = () => {
+      const h = document.documentElement, y = h.scrollTop;
+      if (this.progressRef.current) this.progressRef.current.style.width = (y / ((h.scrollHeight - h.clientHeight) || 1) * 100) + '%';
+      let active = '';
+      SECTIONS.forEach(id => { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top < 200) active = id; });
+      if (this.heroImgRef.current && y < window.innerHeight * 1.2) this.heroImgRef.current.style.transform = 'translateY(' + (y * 0.3) + 'px)';
+      if (!this.state.mapOn) { const mp = document.getElementById('presencia'); if (mp && mp.getBoundingClientRect().top < window.innerHeight * 0.8) this.setState({ mapOn:true }); }
+      const scrolled = y > 40;
+      if (active !== this.state.active || scrolled !== this.state.scrolled) this.setState({ active, scrolled });
+    };
+    this.onResize = () => { const w = window.innerWidth >= 900, xl = window.innerWidth >= 1200; if (w !== this.state.wide || xl !== this.state.xl) this.setState({ wide:w, xl, mobile:false }); };
+    window.addEventListener('scroll', this.onScroll, { passive:true });
+    window.addEventListener('resize', this.onResize);
+    this.onResize(); this.onScroll();
+    setTimeout(() => this.setupReveal(), 60);
+    this.heroIntro();
+  }
+  componentWillUnmount() { window.removeEventListener('scroll', this.onScroll); window.removeEventListener('resize', this.onResize); this.io && this.io.disconnect(); }
+  setupReveal() {
+    this.io = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      if (e.target === this.statsRef.current) this.count();
+      else if (e.target === this.mapRef.current) this.setState({ mapOn:true });
+      else if (e.target.dataset.stagger) [...e.target.children].forEach(c => { c.style.opacity = 1; c.style.transform = 'none'; });
+      else { e.target.style.opacity = 1; e.target.style.transform = 'none'; }
+      this.io.unobserve(e.target);
+    }), { threshold:0.15 });
+    if (this.props.revealAnimations !== false) document.querySelectorAll('[data-reveal]').forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.9) return;
+      el.style.opacity = 0; el.style.transform = 'translateY(24px)'; el.style.transition = 'opacity 700ms ease, transform 700ms ease';
+      this.io.observe(el);
+    });
+    if (this.props.revealAnimations !== false) document.querySelectorAll('[data-stagger]').forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.9) return;
+      [...el.children].forEach((c, i) => { c.style.opacity = 0; c.style.transform = 'translateY(40px)'; c.style.transition = 'opacity 700ms ease ' + (i * 110) + 'ms, transform 800ms cubic-bezier(.2,.7,.2,1) ' + (i * 110) + 'ms'; });
+      this.io.observe(el);
+    });
+    if (this.statsRef.current) this.io.observe(this.statsRef.current);
+    if (this.mapRef.current) this.io.observe(this.mapRef.current);
+  }
+  heroIntro() {
+    const els = document.querySelectorAll('[data-hero]');
+    els.forEach(el => { el.style.opacity = 0; el.style.transform = 'translateY(32px)'; });
+    requestAnimationFrame(() => requestAnimationFrame(() => els.forEach(el => { const i = +el.dataset.hero; el.style.transition = 'opacity 900ms ease ' + (200 + i * 140) + 'ms, transform 900ms cubic-bezier(.2,.7,.2,1) ' + (200 + i * 140) + 'ms'; el.style.opacity = 1; el.style.transform = 'none'; })));
+  }
+  count() {
+    const t0 = performance.now();
+    const step = now => { const p = Math.min(1, (now - t0) / 1800); this.setState({ countP: 1 - Math.pow(1 - p, 3) }); if (p < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }
+  jump(id) { return e => { if (e && e.preventDefault) e.preventDefault(); this.setState({ mobile:false }); const el = document.getElementById(id); window.scrollTo({ top: el ? el.getBoundingClientRect().top + window.scrollY - 76 : 0, behavior:'smooth' }); }; }
+  marqueeFor(t) {
+    if (this.mq && this.mqLang === this.state.lang) return this.mq;
+    const words = t.units.map(u => u[0]).concat(t.countries.map(c => c.name));
+    const row = [0, 1].flatMap(k => words.map((w, i) => React.createElement('span', { key:k + '-' + i, style:{ display:'flex', alignItems:'center', gap:44, paddingRight:44, whiteSpace:'nowrap' } },
+      React.createElement('span', { style:{ fontFamily:'var(--sans)', fontSize:12, fontWeight:500, letterSpacing:'0.22em', textTransform:'uppercase', color:'#0c2743' } }, w),
+      React.createElement('span', { style:{ width:4, height:4, borderRadius:'50%', background:'#bf9a5b', flex:'none' } }))));
+    this.mqLang = this.state.lang;
+    return this.mq = React.createElement('div', { style:{ display:'flex', width:'max-content', animation:'stfMarquee 55s linear infinite' } }, row);
+  }
+  renderVals() {
+    const S = this.state, t = COPY[S.lang];
+    const fmt = v => Math.round(v).toLocaleString(S.lang === 'en' ? 'en-US' : 'es-MX');
+    return {
+      t, wide:S.wide, narrow:!S.wide, progressRef:this.progressRef, statsRef:this.statsRef,
+      headerBg: S.scrolled || S.mobile ? 'rgba(7,26,45,0.92)' : 'transparent',
+      headerLine: S.scrolled ? 'rgba(255,255,255,0.12)' : 'transparent',
+      navItems: SECTIONS.slice(0, 4).map(id => ({ id, label:t.nav[id], op: S.active === id ? 1 : 0.78, scale: S.active === id ? 1 : 0, go:this.jump(id) })),
+      mobileOpen: S.mobile && !S.wide, toggleMobile: () => this.setState({ mobile:!S.mobile }),
+      burgerTop: S.mobile ? '15px' : '11px', burgerBot: S.mobile ? '15px' : '18px', burgerRotA: S.mobile ? '45deg' : '0deg', burgerRotB: S.mobile ? '-45deg' : '0deg',
+      esOp: S.lang === 'es' ? 1 : 0.45, enOp: S.lang === 'en' ? 1 : 0.45,
+      setEs: () => this.setState({ lang:'es' }), setEn: () => this.setState({ lang:'en' }),
+      jumpTop: this.jump('inicio'), goUnits: this.jump('negocios'), goContact: this.jump('contacto'),
+      railStyle: { position:'absolute', left:'3vw', top:130 },
+      stats: STATS.map((s, i) => ({ val: fmt(s.n * S.countP), suf:s.s, label:t.stats[i] })),
+      units: t.units.map((u, i) => { const on = S.hoverUnit === i; return { n:'0' + (i + 1), name:u[0], short:u[1], fg: on ? '#bf9a5b' : '#0c2743', sub: '#6d7780', line: on ? '100%' : '0%', shift: on ? '-4px' : '0px', rot: on ? '-45deg' : '0deg', circ: on ? '#bf9a5b' : 'rgba(12,39,67,0.16)', enter: () => this.setState({ hoverUnit:i }) }; }),
+      unitLeave: () => this.setState({ hoverUnit:-1 }),
+      unitCols: S.xl ? 'repeat(5,minmax(0,1fr))' : 'repeat(auto-fit,minmax(min(100%,220px),1fr))',
+      jobChips: [-1, 0, 1, 2, 3, 4].map(k => ({ label: k < 0 ? t.all : t.units[k][0], fg: S.jobCat === k ? '#0c2743' : '#6d7780', scale: S.jobCat === k ? 1 : 0, go: () => this.setState({ jobCat:k, openJob:-1 }) })),
+      jobCols: S.wide ? 'minmax(0,2.2fr) minmax(0,1fr) minmax(0,1fr) 30px' : 'minmax(0,1fr) 30px',
+      jobs: JOBS.map((j, idx) => ({ j, idx })).filter(o => S.jobCat < 0 || o.j.u === S.jobCat).map(({ j, idx }) => { const open = S.openJob === idx, ap = !!S.appliedJobs[idx]; return {
+        title: j[S.lang][0], desc: j[S.lang][1], req: j[S.lang][2], unit: t.units[j.u][0], country: t.countries[j.c].name, type: j.ft ? t.fullTime : t.hybrid,
+        open, applied: ap, notApplied: !ap, rot: open ? '45deg' : '0deg', circ: open ? '#bf9a5b' : 'rgba(12,39,67,0.16)', circBg: open ? '#bf9a5b' : 'transparent',
+        toggle: () => this.setState({ openJob: open ? -1 : idx }), apply: () => this.setState({ appliedJobs: Object.assign({}, S.appliedJobs, { [idx]: true }) }) }; }),
+      presCols: S.wide ? 'minmax(0,0.8fr) minmax(0,1.6fr)' : 'minmax(0,1fr)',
+      lang: S.lang, mapOn: S.mapOn, heroImgRef: this.heroImgRef, mapRef: this.mapRef,
+      heroImg: this.heroImgEl || (this.heroImgEl = React.createElement('img', { src:'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=2400&q=80&auto=format&fit=crop', alt:'Torre corporativa', style:{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'center 40%', display:'block', animation:'stfKen 2.6s cubic-bezier(.2,.7,.2,1) both' } })),
+      scrollArrow: this.arrowEl || (this.arrowEl = React.createElement('span', { style:{ display:'inline-block', color:'#bf9a5b', fontSize:14, animation:'stfBounce 1.8s ease-in-out infinite' } }, '↓')),
+      marquee: this.marqueeFor(t),
+      sent:S.sent, notSent:!S.sent,
+      submit: e => { e.preventDefault(); this.setState({ sent:true }); },
+    };
+  }
+}
+</script>
+</body>
+</html>
