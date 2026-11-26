@@ -109,19 +109,19 @@ export const COPY: Record<Lang, Copy> = {
       },
       construccion: {
         name: "Construcción",
-        short: "Edificación, obra civil e infraestructura con estándares internacionales.",
+        short: "Fabricación y distribución de materiales de construcción de primera calidad para el mercado.",
       },
       comercial: {
         name: "Comercial",
-        short: "Centros y plazas comerciales que conectan marcas con comunidades.",
+        short: "Representación y distribución de marcas de primer nivel, con amplia cobertura y respaldo comercial.",
       },
       logistica: {
         name: "Logística",
-        short: "Parques industriales y redes de distribución para la región.",
+        short: "Soluciones logísticas que garantizan el traslado seguro y oportuno de mercancías a nivel nacional.",
       },
       servicios: {
         name: "Servicios",
-        short: "Servicios corporativos y administración de instalaciones.",
+        short: "Servicios corporativos integrales que respaldan la operación de empresas en distintos ámbitos.",
       },
     },
     mapEyebrow: "Presencia",
@@ -204,11 +204,20 @@ export const COPY: Record<Lang, Copy> = {
       },
       construccion: {
         name: "Construction",
-        short: "Building, civil works and infrastructure to international standards.",
+        short: "Manufacturing and distribution of premium-quality construction materials for the market.",
       },
-      comercial: { name: "Retail", short: "Shopping centers that connect brands with communities." },
-      logistica: { name: "Logistics", short: "Industrial parks and distribution networks for the region." },
-      servicios: { name: "Services", short: "Corporate services and facility management." },
+      comercial: {
+        name: "Retail",
+        short: "Representation and distribution of top-tier brands, with broad coverage and commercial support.",
+      },
+      logistica: {
+        name: "Logistics",
+        short: "Logistics solutions that ensure the safe, timely transport of goods nationwide.",
+      },
+      servicios: {
+        name: "Services",
+        short: "Comprehensive corporate services that support business operations across diverse areas.",
+      },
     },
     mapEyebrow: "Presence",
     mapT: "Three countries,\none",
