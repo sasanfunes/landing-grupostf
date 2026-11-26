@@ -2,6 +2,7 @@
 
 import { SectionHeading, SectionNumber } from "@/components/ds";
 import { UNIT_KEYS } from "@/lib/i18n";
+import { sectionNumber } from "@/lib/site";
 import { useLang } from "./LangContext";
 import s from "./landing.module.css";
 
@@ -9,7 +10,7 @@ export function Units() {
   const { t } = useLang();
   return (
     <section id="negocios" className={`${s.section} ${s.bgWhite}`} aria-labelledby="negocios-title">
-      <SectionNumber>02</SectionNumber>
+      <SectionNumber>{sectionNumber("negocios")}</SectionNumber>
       <div data-reveal className={s.unitsHead}>
         <SectionHeading
           id="negocios-title"

@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { SectionHeading, SectionNumber } from "@/components/ds";
 import { COUNTRY_KEYS } from "@/lib/i18n";
+import { sectionNumber } from "@/lib/site";
 import { useLang } from "./LangContext";
 import s from "./landing.module.css";
 import m from "./PresenceMap.module.css";
@@ -56,7 +57,7 @@ export function Presence() {
 
   return (
     <section id="presencia" className={`${s.section} ${s.bgNavy}`} aria-labelledby="presencia-title">
-      <SectionNumber>03</SectionNumber>
+      <SectionNumber>{sectionNumber("presencia")}</SectionNumber>
       <div data-reveal className={s.presence}>
         <div className={s.presenceAside}>
           <SectionHeading

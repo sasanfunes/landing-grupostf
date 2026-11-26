@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import type { Lang } from "@/lib/i18n";
 import type { JobOpening } from "@/lib/jobs";
+import { FEATURES } from "@/lib/site";
 import { About } from "./About";
 import { Careers } from "./Careers";
 import { Contact } from "./Contact";
@@ -27,7 +28,7 @@ export function LandingClient({ lang, jobs, year }: { lang: Lang; jobs: JobOpeni
         <About />
         <Units />
         <Presence />
-        <Careers jobs={jobs} />
+        {FEATURES.careers && <Careers jobs={jobs} />}
         <Contact />
       </main>
       <Footer year={year} />

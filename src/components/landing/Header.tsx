@@ -3,13 +3,15 @@
 import Image from "next/image";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { CircleLink } from "@/components/ds";
-import { LANGS, SECTION_IDS, type SectionId } from "@/lib/i18n";
+import { LANGS, type SectionId } from "@/lib/i18n";
+import { ACTIVE_SECTIONS } from "@/lib/site";
 import logoWhite from "@/assets/brand/grupo-stf-white.png";
 import { useLang } from "./LangContext";
 import { scrollToId } from "./motion";
 import s from "./Header.module.css";
 
-const NAV: SectionId[] = ["nosotros", "negocios", "presencia", "carreras"];
+// Contacto va como botón aparte en escritorio.
+const NAV = ACTIVE_SECTIONS.filter((id) => id !== "contacto");
 
 export function Header() {
   const { t, lang, setLang } = useLang();
@@ -28,7 +30,7 @@ export function Header() {
       const max = h.scrollHeight - h.clientHeight || 1;
       if (progressRef.current) progressRef.current.style.transform = `scaleX(${Math.min(1, y / max)})`;
       let current: SectionId | "" = "";
-      for (const id of SECTION_IDS) {
+      for (const id of ACTIVE_SECTIONS) {
         const el = document.getElementById(id);
         if (el && el.getBoundingClientRect().top < 200) current = id;
       }
@@ -138,7 +140,7 @@ export function Header() {
 
       {open && (
         <nav id="mobile-menu" className={s.mobile} aria-label={lang === "es" ? "Menú" : "Menu"}>
-          {SECTION_IDS.map((id) => (
+          {ACTIVE_SECTIONS.map((id) => (
             <a key={id} href={`#${id}`} onClick={go(id)} className={s.mobileLink}>
               <span>{t.nav[id]}</span>
               <span className={s.mobileArrow} aria-hidden="true">

@@ -1,3 +1,22 @@
+import { SECTION_IDS, type SectionId } from "./i18n";
+
+/**
+ * Secciones opcionales. `careers` (vacantes + postulaciones) está desactivada
+ * hasta la actualización con el panel de administración: con `false` no se
+ * muestra la sección, no aparece en el menú y no se consulta Supabase.
+ */
+export const FEATURES = {
+  careers: false,
+} as const;
+
+/** Secciones visibles, en orden (definen el menú y la numeración lateral). */
+export const ACTIVE_SECTIONS: SectionId[] = SECTION_IDS.filter((id) => id !== "carreras" || FEATURES.careers);
+
+/** Número de la sección en el riel lateral ("01", "02", …). */
+export function sectionNumber(id: SectionId): string {
+  return String(ACTIVE_SECTIONS.indexOf(id) + 1).padStart(2, "0");
+}
+
 /**
  * Datos editables del sitio. Las cifras y los datos de contacto son
  * marcadores de posición del diseño: confírmalos antes de publicar.

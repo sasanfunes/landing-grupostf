@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { SectionHeading, SectionNumber, Stat } from "@/components/ds";
-import { SITE } from "@/lib/site";
+import { SITE, sectionNumber } from "@/lib/site";
 import { useLang } from "./LangContext";
 import { prefersReducedMotion } from "./motion";
 import s from "./landing.module.css";
@@ -45,7 +45,7 @@ export function About() {
 
   return (
     <section id="nosotros" className={`${s.section} ${s.bgWarm}`} aria-labelledby="nosotros-title">
-      <SectionNumber>01</SectionNumber>
+      <SectionNumber>{sectionNumber("nosotros")}</SectionNumber>
       <div data-reveal className={`${s.split} ${s.alignEnd}`}>
         <SectionHeading
           id="nosotros-title"

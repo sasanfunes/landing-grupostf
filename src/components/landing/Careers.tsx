@@ -5,6 +5,7 @@ import { submitApplication, type FormState } from "@/app/actions";
 import { Button, Input, SectionHeading, SectionNumber } from "@/components/ds";
 import { UNIT_KEYS, type UnitKey } from "@/lib/i18n";
 import type { JobOpening } from "@/lib/jobs";
+import { sectionNumber } from "@/lib/site";
 import { useLang } from "./LangContext";
 import { Honeypot } from "./Honeypot";
 import s from "./landing.module.css";
@@ -22,7 +23,7 @@ export function Careers({ jobs }: { jobs: JobOpening[] }) {
 
   return (
     <section id="carreras" className={`${s.section} ${s.bgWhite}`} aria-labelledby="carreras-title">
-      <SectionNumber>04</SectionNumber>
+      <SectionNumber>{sectionNumber("carreras")}</SectionNumber>
       <div data-reveal className={`${s.split} ${s.alignEnd} ${s.careersHead}`}>
         <SectionHeading
           id="carreras-title"

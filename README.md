@@ -13,6 +13,12 @@ Supabase (Postgres + RLS) · Vercel.
 
 El botón ES | EN cambia el idioma al instante y actualiza la URL (`/` ↔ `/en`) sin recargar.
 
+> **Sección Carrera desactivada.** Las vacantes y postulaciones están apagadas hasta una
+> actualización posterior (panel de administración). El código sigue en el repo; para
+> reactivarla cambia `FEATURES.careers` a `true` en `src/lib/site.ts`. Con `false` la sección
+> no se muestra, no aparece en el menú, la numeración lateral se ajusta sola y no se consulta
+> Supabase.
+
 ---
 
 ## Estructura
@@ -99,7 +105,7 @@ Opción B — Dashboard: pega en **SQL Editor** el contenido de
 `supabase/migrations/20261126141621_landing_schema.sql` y después
 `supabase/migrations/20261126141623_seed_job_openings.sql`.
 
-### Administrar vacantes
+### Administrar vacantes (cuando se reactive Carrera)
 
 En **Table Editor → job_openings**: agrega filas (título, descripción y requisitos en ES y EN),
 o pon `is_active = false` para ocultar una vacante. Valores válidos:
@@ -129,7 +135,8 @@ Los mensajes y postulaciones se consultan en **Table Editor** (`contact_messages
      La integración crea las variables de entorno automáticamente.
    - **Proyecto existente:** agrega las variables a mano en
      **Settings → Environment Variables** (Production y Preview).
-3. Agrega `REVALIDATE_SECRET` (y opcionalmente `NEXT_PUBLIC_SITE_URL` con el dominio final).
+3. Opcional: `NEXT_PUBLIC_SITE_URL` con el dominio final (y `REVALIDATE_SECRET` cuando se
+   reactive Carrera).
 4. Aplica el esquema (sección anterior) y vuelve a desplegar.
 
 ### Variables de entorno
@@ -137,9 +144,9 @@ Los mensajes y postulaciones se consultan en **Table Editor** (`contact_messages
 | Variable | Dónde se usa | Notas |
 | --- | --- | --- |
 | `NEXT_PUBLIC_SUPABASE_URL` | Servidor | También acepta `SUPABASE_URL` |
-| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Servidor (lectura de vacantes) | También acepta `NEXT_PUBLIC_SUPABASE_ANON_KEY` / `SUPABASE_ANON_KEY` |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Servidor (lectura de vacantes; sin uso mientras Carrera esté apagada) | También acepta `NEXT_PUBLIC_SUPABASE_ANON_KEY` / `SUPABASE_ANON_KEY` |
 | `SUPABASE_SECRET_KEY` | Servidor (inserts) | **Secreta.** También acepta `SUPABASE_SERVICE_ROLE_KEY` |
-| `REVALIDATE_SECRET` | `/api/revalidate` | `openssl rand -hex 32` |
+| `REVALIDATE_SECRET` | `/api/revalidate` | `openssl rand -hex 32`. Sólo hace falta con Carrera activa |
 | `NEXT_PUBLIC_SITE_URL` | Canonical, sitemap, OG | Opcional; por defecto usa el dominio de producción de Vercel |
 
 Los previews de Vercel envían `robots: noindex` automáticamente.
@@ -152,8 +159,8 @@ Se probó sin desbordamiento horizontal en 320, 360, 375, 390 y 430 px (teléfon
 600, 768, 820 y 1024 px (tablets, vertical y horizontal), teléfono en horizontal (844×390)
 y escritorio (1280, 1440).
 
-- `< 900px`: menú hamburguesa a pantalla completa (incluye Contacto), layouts apilados,
-  vacantes en dos líneas.
+- `< 900px`: menú hamburguesa a pantalla completa (incluye Contacto), layouts apilados
+  (y vacantes en dos líneas cuando Carrera está activa).
 - `< 600px`: márgenes de 24px, títulos ajustados al ancho, cifras en 2×2, mapa con etiquetas
   escaladas y leyenda debajo.
 - Teléfonos en horizontal: hero compacto para que el texto y el botón entren en pantalla.
@@ -164,6 +171,6 @@ y escritorio (1280, 1440).
 
 - Cifras (28 años, 14,500+ colaboradores) y datos de contacto en `src/lib/site.ts`: son
   marcadores del diseño. **La dirección aún es de Ciudad de México: confirmar la sede real.**
-- Vacantes reales (reemplazar las de ejemplo en Supabase).
+- Carrera: panel de administración para vacantes y postulaciones (actualización posterior).
 - Página de **Aviso de privacidad** (el footer la menciona; el sitio recoge datos personales).
 - Foto del hero: Unsplash; reemplazar por fotografía con licencia de la marca si existe.

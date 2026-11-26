@@ -3,7 +3,7 @@
 import { useActionState } from "react";
 import { submitContact, type FormState } from "@/app/actions";
 import { Button, Input, SectionHeading, SectionNumber, Textarea } from "@/components/ds";
-import { SITE } from "@/lib/site";
+import { SITE, sectionNumber } from "@/lib/site";
 import { Honeypot } from "./Honeypot";
 import { useLang } from "./LangContext";
 import s from "./landing.module.css";
@@ -19,7 +19,7 @@ export function Contact() {
 
   return (
     <section id="contacto" className={`${s.section} ${s.bgWarm}`} aria-labelledby="contacto-title">
-      <SectionNumber>05</SectionNumber>
+      <SectionNumber>{sectionNumber("contacto")}</SectionNumber>
       <div data-reveal className={`${s.split} ${s.alignStart}`}>
         <div className={s.contactAside}>
           <SectionHeading
