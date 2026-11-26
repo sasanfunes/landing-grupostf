@@ -27,6 +27,9 @@ export function sectionNumber(id: SectionId): string {
  * Datos editables del sitio. Las cifras y los datos de contacto son
  * marcadores de posición del diseño: confírmalos antes de publicar.
  */
+const HQ_ADDRESS = "2da Avenida, 18 Calle NO, Zona de Cervecería, San Pedro Sula, Cortés, Honduras";
+const CONTACT_EMAIL = "contacto@grupostf.hn";
+
 export const SITE = {
   name: "Grupo STF",
   description:
@@ -34,20 +37,19 @@ export const SITE = {
   descriptionEn:
     "Grupo STF is a Honduran organization with an international presence across five sectors: real estate, construction, retail, logistics and services.",
   contact: {
-    // TODO: confirmar la sede corporativa real.
-    address: "Paseo de la Reforma 2620, Lomas Altas, 11950, Ciudad de México",
+    address: HQ_ADDRESS,
+    // TODO: marcador del diseño (número de México); reemplazar por el teléfono real.
     phone: "+52 55 5000 7800",
-    email: "contacto@grupostf.mx",
+    email: CONTACT_EMAIL,
   },
   /**
    * Datos del responsable para el Aviso de privacidad.
-   * TODO: reemplazar por la razón social y el domicilio legal reales, y revisar
-   * el aviso con el área legal antes de publicar.
+   * TODO: confirmar la razón social exacta y revisar el aviso con el área legal.
    */
   legal: {
     controller: "Grupo STF",
-    address: "Paseo de la Reforma 2620, Lomas Altas, 11950, Ciudad de México",
-    privacyEmail: "contacto@grupostf.mx",
+    address: HQ_ADDRESS,
+    privacyEmail: CONTACT_EMAIL,
     updated: { es: "26 de noviembre de 2026", en: "November 26, 2026" },
   },
   stats: [

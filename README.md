@@ -173,10 +173,11 @@ y escritorio (1280, 1440).
 
 ## Pendientes de contenido
 
-- Cifras (28 años, 14,500+ colaboradores) y datos de contacto en `src/lib/site.ts`: son
-  marcadores del diseño. **La dirección aún es de Ciudad de México: confirmar la sede real.**
+- Cifras (28 años, 14,500+ colaboradores) en `src/lib/site.ts`: son marcadores del diseño.
+- **Teléfono de contacto:** sigue el número de ejemplo del diseño (+52 55…, México). La dirección
+  (San Pedro Sula) y el correo (`contacto@grupostf.hn`) ya son los reales.
 - Carrera: panel de administración para vacantes y postulaciones (actualización posterior).
-- **Aviso de privacidad:** completar razón social y domicilio legal en `SITE.legal`
+- **Aviso de privacidad:** confirmar la razón social en `SITE.legal`
   (`src/lib/site.ts`) y que lo revise el área legal. El texto está en
   `src/components/legal/privacyContent.tsx` y describe lo que el sitio hace hoy (formulario de
   contacto, sin cookies ni analítica, foto del hero desde Unsplash): si se agrega analítica,
