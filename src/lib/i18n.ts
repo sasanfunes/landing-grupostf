@@ -71,6 +71,10 @@ type Copy = {
   errValidation: string;
   errServer: string;
   privacy: string;
+  privacyNote: string;
+  backHome: string;
+  legalEyebrow: string;
+  updated: string;
   top: string;
 };
 
@@ -168,6 +172,10 @@ export const COPY: Record<Lang, Copy> = {
     errValidation: "Revisa los campos marcados e inténtalo de nuevo.",
     errServer: "No pudimos enviar tu mensaje. Inténtalo de nuevo en unos minutos.",
     privacy: "Aviso de privacidad",
+    privacyNote: "Al enviar este formulario aceptas el tratamiento de tus datos conforme a nuestro",
+    backHome: "Volver al inicio",
+    legalEyebrow: "Legal",
+    updated: "Última actualización",
     top: "Volver arriba",
   },
   en: {
@@ -258,6 +266,10 @@ export const COPY: Record<Lang, Copy> = {
     errValidation: "Please review the highlighted fields and try again.",
     errServer: "We couldn’t send your message. Please try again in a few minutes.",
     privacy: "Privacy notice",
+    privacyNote: "By submitting this form you agree to the processing of your data as described in our",
+    backHome: "Back to home",
+    legalEyebrow: "Legal",
+    updated: "Last updated",
     top: "Back to top",
   },
 };

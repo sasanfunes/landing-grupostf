@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { siteUrl } from "@/lib/site";
+import { PATHS, siteUrl } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteUrl().origin;
@@ -7,5 +7,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: `${base}/`, changeFrequency: "weekly", priority: 1, alternates: { languages } },
     { url: `${base}/en`, changeFrequency: "weekly", priority: 0.8, alternates: { languages } },
+    ...(["es", "en"] as const).map((lang) => ({
+      url: `${base}${PATHS.privacy[lang]}`,
+      changeFrequency: "yearly" as const,
+      priority: 0.3,
+      alternates: { languages: { es: `${base}${PATHS.privacy.es}`, en: `${base}${PATHS.privacy.en}` } },
+    })),
   ];
 }

@@ -3,7 +3,7 @@
 import { useActionState } from "react";
 import { submitContact, type FormState } from "@/app/actions";
 import { Button, Input, SectionHeading, SectionNumber, Textarea } from "@/components/ds";
-import { SITE, sectionNumber } from "@/lib/site";
+import { PATHS, SITE, sectionNumber } from "@/lib/site";
 import { Honeypot } from "./Honeypot";
 import { useLang } from "./LangContext";
 import s from "./landing.module.css";
@@ -74,6 +74,9 @@ export function Contact() {
                 />
               </div>
               <Textarea id="contact-msg" name="message" label={t.fMsg} rows={4} maxLength={5000} defaultValue={v.message} error={!!f.message} />
+              <p className={s.formNote}>
+                {t.privacyNote} <a href={PATHS.privacy[lang]}>{t.privacy}</a>.
+              </p>
               {state.status === "error" && (
                 <p className={s.formError} role="alert">
                   {state.error === "validation" ? t.errValidation : t.errServer}

@@ -667,6 +667,21 @@
   flex-wrap: wrap;
   gap: 12px;
 }
+.formNote {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.formNote a {
+  color: var(--navy);
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-underline-offset: 3px;
+}
+.formNote a:hover {
+  color: var(--gold);
+}
 .formError {
   margin: 0;
   font-size: 13px;
@@ -762,6 +777,21 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--on-dark-body);
+}
+.footerLink {
+  display: inline-block;
+  padding: 8px 0;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.3);
+  text-underline-offset: 4px;
+  transition:
+    color var(--dur-fast) ease,
+    text-decoration-color var(--dur-fast) ease;
+}
+.footerLink:hover {
+  color: var(--gold);
+  text-decoration-color: var(--gold);
 }
 @media (max-width: 599px) {
   .footer {

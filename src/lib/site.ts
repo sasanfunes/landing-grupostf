@@ -1,4 +1,4 @@
-import { SECTION_IDS, type SectionId } from "./i18n";
+import { SECTION_IDS, type Lang, type SectionId } from "./i18n";
 
 /**
  * Secciones opcionales. `careers` (vacantes + postulaciones) está desactivada
@@ -8,6 +8,12 @@ import { SECTION_IDS, type SectionId } from "./i18n";
 export const FEATURES = {
   careers: false,
 } as const;
+
+/** Rutas por idioma. */
+export const PATHS: Record<"home" | "privacy", Record<Lang, string>> = {
+  home: { es: "/", en: "/en" },
+  privacy: { es: "/aviso-de-privacidad", en: "/en/privacy-notice" },
+};
 
 /** Secciones visibles, en orden (definen el menú y la numeración lateral). */
 export const ACTIVE_SECTIONS: SectionId[] = SECTION_IDS.filter((id) => id !== "carreras" || FEATURES.careers);
@@ -32,6 +38,17 @@ export const SITE = {
     address: "Paseo de la Reforma 2620, Lomas Altas, 11950, Ciudad de México",
     phone: "+52 55 5000 7800",
     email: "contacto@grupostf.mx",
+  },
+  /**
+   * Datos del responsable para el Aviso de privacidad.
+   * TODO: reemplazar por la razón social y el domicilio legal reales, y revisar
+   * el aviso con el área legal antes de publicar.
+   */
+  legal: {
+    controller: "Grupo STF",
+    address: "Paseo de la Reforma 2620, Lomas Altas, 11950, Ciudad de México",
+    privacyEmail: "contacto@grupostf.mx",
+    updated: { es: "26 de noviembre de 2026", en: "November 26, 2026" },
   },
   stats: [
     { value: 28, suffix: "" },

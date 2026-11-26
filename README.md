@@ -7,8 +7,10 @@ One-pager bilingüe (ES/EN) de Grupo STF construido a partir del handoff de dise
 Supabase (Postgres + RLS) · Vercel.
 
 ```
-/        → versión en español (por defecto)
-/en      → versión en inglés (mismo contenido, prerenderizado en inglés)
+/                     → versión en español (por defecto)
+/en                   → versión en inglés (mismo contenido, prerenderizado en inglés)
+/aviso-de-privacidad  → Aviso de privacidad (ES)
+/en/privacy-notice    → Privacy notice (EN)
 ```
 
 El botón ES | EN cambia el idioma al instante y actualiza la URL (`/` ↔ `/en`) sin recargar.
@@ -28,6 +30,7 @@ src/
   app/
     layout.tsx            Fuentes (DM Serif Display + Manrope), metadata base
     page.tsx / en/page.tsx  Páginas ES / EN (estáticas, con hreflang)
+    aviso-de-privacidad/, en/privacy-notice/  Aviso de privacidad ES / EN
     actions.ts            Server Actions: contacto y postulaciones → Supabase
     api/revalidate/       POST para refrescar vacantes al instante
     sitemap.ts, robots.ts, icon.png, apple-icon.png
@@ -37,6 +40,7 @@ src/
                            CircleLink, Input, Textarea)
     landing/              Secciones: Header, Hero, Marquee, About, Units,
                           Presence (+ PresenceMap con d3-geo), Careers, Contact, Footer
+    legal/                Página y texto del Aviso de privacidad (privacyContent.tsx)
   lib/
     i18n.ts               TODO el texto ES/EN
     site.ts               Datos de contacto, cifras y foto del hero (editar aquí)
@@ -172,5 +176,9 @@ y escritorio (1280, 1440).
 - Cifras (28 años, 14,500+ colaboradores) y datos de contacto en `src/lib/site.ts`: son
   marcadores del diseño. **La dirección aún es de Ciudad de México: confirmar la sede real.**
 - Carrera: panel de administración para vacantes y postulaciones (actualización posterior).
-- Página de **Aviso de privacidad** (el footer la menciona; el sitio recoge datos personales).
+- **Aviso de privacidad:** completar razón social y domicilio legal en `SITE.legal`
+  (`src/lib/site.ts`) y que lo revise el área legal. El texto está en
+  `src/components/legal/privacyContent.tsx` y describe lo que el sitio hace hoy (formulario de
+  contacto, sin cookies ni analítica, foto del hero desde Unsplash): si se agrega analítica,
+  cookies o nuevos formularios, hay que actualizarlo y cambiar la fecha en `SITE.legal.updated`.
 - Foto del hero: Unsplash; reemplazar por fotografía con licencia de la marca si existe.

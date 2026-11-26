@@ -6,9 +6,13 @@ export function prefersReducedMotion(): boolean {
 
 /** Desplaza suavemente a una sección (respeta `scroll-padding-top`). */
 export function scrollToId(id: string) {
+  const behavior: ScrollBehavior = prefersReducedMotion() ? "auto" : "smooth";
   const el = document.getElementById(id);
-  if (!el) return;
-  el.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" });
+  if (!el) {
+    window.scrollTo({ top: 0, behavior });
+    return;
+  }
+  el.scrollIntoView({ behavior, block: "start" });
 }
 
 /**
