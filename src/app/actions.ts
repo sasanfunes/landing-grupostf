@@ -35,12 +35,13 @@ async function userAgent(): Promise<string | null> {
 }
 
 function missingConfig(kind: string): FormState {
-  // En local/preview sin Supabase dejamos probar la interfaz; en producción es un error.
-  if (process.env.VERCEL_ENV === "production") {
-    console.error(`[${kind}] Faltan NEXT_PUBLIC_SUPABASE_URL / SUPABASE_SECRET_KEY.`);
+  // Sólo en local (`npm run dev`) se simula el envío para probar la interfaz.
+  // En cualquier deployment de Vercel (producción o preview) es un error visible.
+  if (process.env.VERCEL) {
+    console.error(`[${kind}] Faltan NEXT_PUBLIC_SUPABASE_URL / SUPABASE_SECRET_KEY en este deployment.`);
     return { status: "error", error: "server" };
   }
-  console.warn(`[${kind}] Supabase no está configurado: el envío no se guardó.`);
+  console.warn(`[${kind}] Supabase no está configurado: el envío no se guardó (sólo local).`);
   return { status: "success" };
 }
 

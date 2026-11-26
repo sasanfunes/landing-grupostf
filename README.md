@@ -69,7 +69,7 @@ npm run dev
 
 Abre http://localhost:3000. **Sin variables de Supabase el sitio funciona igual**: muestra las
 vacantes de ejemplo y los formularios simulan el envío (se avisa en la consola del servidor).
-En producción (`VERCEL_ENV=production`) un envío sin Supabase configurado devuelve error.
+En Vercel (producción y previews) un envío sin Supabase configurado muestra un error en el formulario.
 
 Otros comandos: `npm run build`, `npm run start`, `npm run lint`.
 
