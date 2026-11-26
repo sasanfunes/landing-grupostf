@@ -24,8 +24,7 @@ export function sectionNumber(id: SectionId): string {
 }
 
 /**
- * Datos editables del sitio. Las cifras y los datos de contacto son
- * marcadores de posición del diseño: confírmalos antes de publicar.
+ * Datos editables del sitio (contacto, cifras, foto del hero).
  */
 const HQ_ADDRESS = "2da Avenida, 18 Calle NO, Zona de Cervecería, San Pedro Sula, Cortés, Honduras";
 const CONTACT_EMAIL = "contacto@grupostf.hn";
@@ -35,16 +34,15 @@ export const SITE = {
   description:
     "Grupo STF es una organización hondureña con presencia internacional en cinco sectores: inmobiliario, construcción, comercial, logística y servicios.",
   descriptionEn:
-    "Grupo STF is a Honduran organization with an international presence across five sectors: real estate, construction, retail, logistics and services.",
+    "Grupo STF is a Honduran organization with an international presence across five sectors: real estate, construction, distribution, logistics and services.",
   contact: {
     address: HQ_ADDRESS,
-    // TODO: marcador del diseño (número de México); reemplazar por el teléfono real.
-    phone: "+52 55 5000 7800",
+    phone: "+504 9379-3349",
     email: CONTACT_EMAIL,
   },
   /**
-   * Datos del responsable para el Aviso de privacidad.
-   * TODO: confirmar la razón social exacta y revisar el aviso con el área legal.
+   * Datos del responsable para el Aviso de privacidad. Por ahora se usa el
+   * nombre comercial "Grupo STF"; si se define una razón social, cambiarla aquí.
    */
   legal: {
     controller: "Grupo STF",
@@ -55,7 +53,7 @@ export const SITE = {
   stats: [
     { value: 28, suffix: "" },
     { value: 3, suffix: "" },
-    { value: 14500, suffix: "+" },
+    { value: 500, suffix: "+" },
     { value: 5, suffix: "" },
   ],
   heroImage:

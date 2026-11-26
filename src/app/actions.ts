@@ -1,6 +1,8 @@
 "use server";
 
 import { headers } from "next/headers";
+import { after } from "next/server";
+import { notifyNewContact } from "@/lib/notify";
 import { createAdminClient } from "@/lib/supabase/server";
 import {
   checkEmail,
@@ -62,18 +64,28 @@ export async function submitContact(_prev: FormState, form: FormData): Promise<F
   const supabase = createAdminClient();
   if (!supabase) return missingConfig("contact");
 
-  const { error } = await supabase.from("contact_messages").insert({
-    full_name: name,
-    email,
-    message: message || null,
-    locale: langOf(form),
-    user_agent: await userAgent(),
-  });
+  const locale = langOf(form);
+  const { data, error } = await supabase
+    .from("contact_messages")
+    .insert({
+      full_name: name,
+      email,
+      message: message || null,
+      locale,
+      user_agent: await userAgent(),
+    })
+    .select("id")
+    .single();
 
   if (error) {
     console.error("[contact] Error al guardar el mensaje:", error.message);
     return { status: "error", error: "server", values };
   }
+
+  // Aviso por correo después de responder: no retrasa al visitante y, si falla,
+  // el mensaje ya quedó guardado.
+  after(() => notifyNewContact({ id: data?.id, name, email, message, locale }));
+
   return { status: "success" };
 }
 

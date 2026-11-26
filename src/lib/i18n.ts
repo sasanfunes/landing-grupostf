@@ -215,7 +215,7 @@ export const COPY: Record<Lang, Copy> = {
         short: "Manufacturing and distribution of premium-quality construction materials for the market.",
       },
       comercial: {
-        name: "Retail",
+        name: "Distribution",
         short: "Representation and distribution of top-tier brands, with broad coverage and commercial support.",
       },
       logistica: {

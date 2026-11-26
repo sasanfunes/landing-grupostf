@@ -130,6 +130,28 @@ Los mensajes y postulaciones se consultan en **Table Editor** (`contact_messages
 
 ---
 
+## Avisos por correo (Resend)
+
+Cada mensaje de contacto, además de guardarse en Supabase, envía un aviso a
+`contacto@grupostf.hn` (configurable) con los datos y el mensaje. Al responder ese correo se
+le contesta directamente a quien escribió (`reply-to`). El aviso se envía **después** de
+guardar y responder al visitante: si el correo falla, el mensaje igual queda en la tabla y el
+error se registra en los logs de Vercel (`[notify] …`). Código: `src/lib/notify.ts`.
+
+Configuración:
+
+1. En Vercel → proyecto → **Integrations / Marketplace → Resend** → instalar y conectar al
+   proyecto (crea `RESEND_API_KEY`). Alternativa: crear la API key en resend.com y agregarla
+   como variable **Secret** en Vercel.
+2. En Resend → **Domains → Add domain** → `grupostf.hn`, y agregar los registros DNS que indica
+   (donde se administra el DNS del dominio). Hasta que el dominio esté verificado, Resend
+   rechaza el envío desde `notificaciones@grupostf.hn`.
+3. **Redeploy** en Vercel y enviar un mensaje de prueba.
+
+Sin `RESEND_API_KEY` el sitio funciona igual, sólo que no envía avisos.
+
+---
+
 ## Despliegue en Vercel
 
 1. En Vercel: **Add New → Project** e importa este repositorio de GitHub
@@ -150,6 +172,9 @@ Los mensajes y postulaciones se consultan en **Table Editor** (`contact_messages
 | `NEXT_PUBLIC_SUPABASE_URL` | Servidor | También acepta `SUPABASE_URL` |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Servidor (lectura de vacantes; sin uso mientras Carrera esté apagada) | También acepta `NEXT_PUBLIC_SUPABASE_ANON_KEY` / `SUPABASE_ANON_KEY` |
 | `SUPABASE_SECRET_KEY` | Servidor (inserts) | **Secreta.** También acepta `SUPABASE_SERVICE_ROLE_KEY` |
+| `RESEND_API_KEY` | Avisos por correo | **Secreta.** Sin ella no se envían avisos |
+| `CONTACT_NOTIFY_TO` | Avisos por correo | Opcional. Destinatarios separados por coma (por defecto `contacto@grupostf.hn`) |
+| `CONTACT_FROM_EMAIL` | Avisos por correo | Opcional. Remitente de un dominio verificado (por defecto `Grupo STF <notificaciones@grupostf.hn>`) |
 | `REVALIDATE_SECRET` | `/api/revalidate` | `openssl rand -hex 32`. Sólo hace falta con Carrera activa |
 | `NEXT_PUBLIC_SITE_URL` | Canonical, sitemap, OG | Opcional; por defecto usa el dominio de producción de Vercel |
 
@@ -173,13 +198,13 @@ y escritorio (1280, 1440).
 
 ## Pendientes de contenido
 
-- Cifras (28 años, 14,500+ colaboradores) en `src/lib/site.ts`: son marcadores del diseño.
-- **Teléfono de contacto:** sigue el número de ejemplo del diseño (+52 55…, México). La dirección
-  (San Pedro Sula) y el correo (`contacto@grupostf.hn`) ya son los reales.
+- Datos de contacto y cifras confirmados (`src/lib/site.ts`): sede en San Pedro Sula,
+  `contacto@grupostf.hn`, +504 9379-3349; 28 años, 3 países, 500+ colaboradores, 5 unidades.
 - Carrera: panel de administración para vacantes y postulaciones (actualización posterior).
-- **Aviso de privacidad:** confirmar la razón social en `SITE.legal`
-  (`src/lib/site.ts`) y que lo revise el área legal. El texto está en
+- **Aviso de privacidad:** usa el nombre comercial "Grupo STF" como responsable (`SITE.legal`).
+  Conviene que lo revise el área legal. El texto está en
   `src/components/legal/privacyContent.tsx` y describe lo que el sitio hace hoy (formulario de
-  contacto, sin cookies ni analítica, foto del hero desde Unsplash): si se agrega analítica,
-  cookies o nuevos formularios, hay que actualizarlo y cambiar la fecha en `SITE.legal.updated`.
+  contacto, avisos por correo vía Resend, sin cookies ni analítica, foto del hero desde
+  Unsplash): si se agrega analítica, cookies o nuevos formularios, hay que actualizarlo y cambiar
+  la fecha en `SITE.legal.updated`.
 - Foto del hero: Unsplash; reemplazar por fotografía con licencia de la marca si existe.

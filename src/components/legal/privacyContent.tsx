@@ -104,8 +104,9 @@ export function privacySections(lang: Lang): LegalSection[] {
                 under the same privacy practices described here.
               </li>
               <li>
-                Technology providers that host the website and its database (Vercel Inc. and Supabase Inc.),
-                which act on our behalf and following our instructions.
+                Technology providers that host the website and its database (Vercel Inc. and Supabase Inc.)
+                and that email us the messages we receive (Resend Inc.), which act on our behalf and following
+                our instructions.
               </li>
               <li>Competent authorities, when required by law.</li>
             </ul>
@@ -285,8 +286,9 @@ export function privacySections(lang: Lang): LegalSection[] {
               bajo las mismas prácticas de privacidad descritas aquí.
             </li>
             <li>
-              Proveedores tecnológicos que alojan el sitio y su base de datos (Vercel Inc. y Supabase Inc.), que
-              actúan por nuestra cuenta y siguiendo nuestras instrucciones.
+              Proveedores tecnológicos que alojan el sitio y su base de datos (Vercel Inc. y Supabase Inc.) y que
+              nos envían por correo electrónico los mensajes que recibimos (Resend Inc.), que actúan por nuestra
+              cuenta y siguiendo nuestras instrucciones.
             </li>
             <li>Autoridades competentes, cuando la ley lo exija.</li>
           </ul>
